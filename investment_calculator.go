@@ -42,31 +42,43 @@ import (
 
 func main() {
 
-	var revenue float64
-	var expenses float64
-	var taxRate float64
+	//var revenue float64
+	//var expenses float64
+	//var taxRate float64
 
-	fmt.Print("Ingresos: ")
-	fmt.Scan(&revenue)
+	revenue := InputValuesAndText("Ingresos: ")
 
-	fmt.Print("Gastos: ")
-	fmt.Scan(&expenses)
+	expenses := InputValuesAndText("Gastos: ")
 
-	fmt.Print("Tasa de Impuestos: ")
-	fmt.Scan(&taxRate)
+	taxRate := InputValuesAndText("Impuestos: ")
 
-	earningBeforeTax := revenue - expenses
+	profit, ebt, ratio := OutputEvaluation(revenue, expenses, taxRate)
 
-	earningAfterTax := earningBeforeTax * (1 - taxRate/100)
+	fmt.Println("tus ganancias despues de impuestos es: ", profit)
+	fmt.Println("tus utilidad neta antes de impuestos es: ", ebt)
+	fmt.Println("el ratio es: ", ratio)
 
-	ratio := earningBeforeTax / earningAfterTax
+}
 
-	fmt.Print("EBT: ")
-	fmt.Println(earningBeforeTax)
+func InputValuesAndText(infoText string) float64 {
 
-	fmt.Print("profit: ")
-	fmt.Println(earningAfterTax)
+	var value float64
 
-	fmt.Print("ratio: ")
-	fmt.Println(ratio)
+	fmt.Print(infoText)
+	fmt.Scan(&value)
+
+	return value
+
+}
+
+func OutputEvaluation(revenue, expenses, taxRate float64) (float64, float64, float64) {
+
+	ebt := revenue - expenses
+
+	profit := ebt * (1 - taxRate/100)
+
+	ratio := ebt / profit
+
+	return profit, ebt, ratio
+
 }
