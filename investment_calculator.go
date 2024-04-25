@@ -42,21 +42,15 @@ import (
 
 func main() {
 
-	//var revenue float64
-	//var expenses float64
-	//var taxRate float64
-
 	revenue := InputValuesAndText("Ingresos: ")
-
 	expenses := InputValuesAndText("Gastos: ")
-
 	taxRate := InputValuesAndText("Impuestos: ")
 
 	profit, ebt, ratio := OutputEvaluation(revenue, expenses, taxRate)
 
 	fmt.Println("tus ganancias despues de impuestos es: ", profit)
 	fmt.Println("tus utilidad neta antes de impuestos es: ", ebt)
-	fmt.Println("el ratio es: ", ratio)
+	fmt.Printf("el ratio es: %.3f", ratio)
 
 }
 
@@ -74,9 +68,7 @@ func InputValuesAndText(infoText string) float64 {
 func OutputEvaluation(revenue, expenses, taxRate float64) (float64, float64, float64) {
 
 	ebt := revenue - expenses
-
 	profit := ebt * (1 - taxRate/100)
-
 	ratio := ebt / profit
 
 	return profit, ebt, ratio
