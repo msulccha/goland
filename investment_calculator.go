@@ -38,6 +38,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func main() {
@@ -48,9 +49,13 @@ func main() {
 
 	profit, ebt, ratio := OutputEvaluation(revenue, expenses, taxRate)
 
+	writeBalanceTofile(profit, ebt, ratio)
+
 	fmt.Println("tus ganancias despues de impuestos es: ", profit)
 	fmt.Println("tus utilidad neta antes de impuestos es: ", ebt)
-	fmt.Printf("el ratio es: %.3f", ratio)
+	fmt.Printf("el ratio es: %.3f\n", ratio)
+
+	fmt.Println("Gracias")
 
 }
 
@@ -61,8 +66,12 @@ func InputValuesAndText(infoText string) float64 {
 	fmt.Print(infoText)
 	fmt.Scan(&value)
 
-	return value
+	if value <= 0 {
+		panic("Valor ingresado inválido, el valor debe ser diferente de 0 y no negativo")
 
+	} else {
+		return value
+	}
 }
 
 func OutputEvaluation(revenue, expenses, taxRate float64) (float64, float64, float64) {
@@ -73,4 +82,12 @@ func OutputEvaluation(revenue, expenses, taxRate float64) (float64, float64, flo
 
 	return profit, ebt, ratio
 
+}
+
+const calculateValue = "calculate.txt"
+
+func writeBalanceTofile(value1, value2, value3 float64) {
+
+	calculateText := fmt.Sprintf("EBT: %.1f\nProfit: %.1f\nRatio: %.3f\n", value1, value2, value3)
+	os.WriteFile(calculateValue, []byte(calculateText), 0644)
 }
